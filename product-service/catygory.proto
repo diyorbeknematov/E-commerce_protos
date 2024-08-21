@@ -5,9 +5,8 @@ option go_package = "generated/categories";
 package category;
 
 message CreateCategoryRequest {
-    string id = 1;
-    string name = 2;
-    string description = 3;
+    string name = 1;
+    string description = 2;
 }
 
 message CreateCategoryResponse {
@@ -19,11 +18,13 @@ message CreateCategoryResponse {
 message GetAllCategoryRequest {
     int64 offset = 1;
     int64 limit = 2;
-    int64 total = 3;
 }
 
 message GetAllCategoryResponse {
     repeated Category catygories = 1;
+    int64 offset = 2;
+    int64 limit = 3;
+    int64 total = 4;
 }
 
 message Category {

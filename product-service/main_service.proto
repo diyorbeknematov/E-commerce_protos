@@ -16,11 +16,16 @@ service MainService {
     rpc GetAllProduct(product.GetAllProductRequest) returns (product.GetAllProductResponse);
     rpc GetByIdProduct(product.GetByIdProductRequest) returns (product.GetByIdProductResponse);
 
-    rpc CreateOrder (product.CreateOrderRequest) returns (product.OrderResponse);
+    rpc CreateOrder (product.Order) returns (product.OrderResponse);
+    rpc GetOrderByPId (product.GetOrderByPIdRequest) returns (product.GetOrderByPIdResponse);
 
-    rpc AddToBasket (product.AddToBasketRequest) returns (product.BasketResponse);
+    rpc AddToBasket (product.AddToBasketRequest) returns (product.AddToBasketResponse);
     rpc GetBasketProducts (product.GetBasketRequest) returns (product.BasketResponse);
     rpc DeleteBasketProduct (product.DeleteBasketRequest) returns (product.DeleteBasketResponse);
+
+    rpc GetUserRecommendation(product.Void) returns (product.GetRecommendationsResponse);
+
+    rpc GetPurchasedProducts(product.GetPurchasedPRequest) returns (product.GetPurchasedPResponse);
 
     // Kategoriyalar bilan bog'liq endpointlar
     rpc GetAllCategories(category.GetAllCategoryRequest) returns (category.GetAllCategoryResponse);

@@ -7,27 +7,16 @@ package product;
 message CreateProductRequest {
     string name=1;
     string description=2;
-    string images=3;
-    float price=4;
-    Discount discount=5;
-    int32 stock=6;
-    repeated BoughtProduct bought_products=7;
-    string created_at = 8;
-    string updated_at = 9;
-    string deleted_at = 10;
+    string category_id = 3;
+    double price=4;
+    int32 stock=5;
+    string images = 6;
+    Discount discount=7;
 }
 
 message Discount {
-    string status=1;
-    float discount_price=2;
-}
-
-message BoughtProduct {
-    string id=1;
-    string user_id=2;
-    string purchase_date=3;
-    int32 quantity=4;
-    float price=5;
+    bool status=1;
+    double discount_price=2;
 }
 
 message CreateProductResponse {
@@ -40,20 +29,18 @@ message UpdateProductRequest {
     string name=2;
     string description=3;
     string images=4;
-    float price=5;
+    double price=5;
     int32 stock=6;
     Discount discount=7;
-    string updated_at = 8;
 }
 
 message UpdateProductResponse {
     string name=1;
     string description=2;
-    string images=3;
+    repeated string images=3;
     float price=4;
     int32 stock=5;
     Discount discount=6;
-    string updated_at = 7;
 }
 
 message DeleteProductRequest {
@@ -67,8 +54,15 @@ message DeleteProductResponse {
 
 
 message GetAllProductRequest { 
-    int64 limit=1;
-    int64 page=2;
+    string name = 1;
+    string category = 2;
+    bool discount = 3;
+    int64 price_order = 4;
+    int64 rating_order = 5;
+    int64 comment_order = 6;
+    bool newest = 7;
+    int64 limit = 8;
+    int64 page  = 9;
 }
 
 message GetAllProductResponse { 
@@ -83,11 +77,10 @@ message Product {
     string id=1;
     string name=2;
     string description=3;
-    string images=4;
-    float price=5;
+    repeated string images=4;
+    double price=5;
     Discount discount=6;
     int32 stock=7;
-    repeated BoughtProduct bought_products=8;
 }
 
 message GetByIdProductRequest {
@@ -99,42 +92,57 @@ message GetByIdProductResponse {
     string name=2;
     string description=3;
     string images=4;
-    float price=5;
+    double price=5;
     Discount discount=6;
     int32 stock=7;
-    repeated BoughtProduct bought_products=8;
     string created_at=9;
 }
-message CreateOrderRequest {
+message OrderRequest {
     string product_id = 1;
     string user_id = 2;
 }
 
 message OrderResponse {
-    string id=1;
-    string user_id=2;
-    string product_id=3;
-    int32 stock=4;
-    float price=5;
+    string product_id=1;
+}
+
+message GetOrderByPIdRequest {
+    string product_id = 1;
+    int64 limit = 2;
+    int64 page  = 3;
+}
+
+message GetOrderByPIdResponse {
+    repeated Order orders = 1;
+    int64 total = 2;
+    int64 limit = 3;
+    int64 offset = 4;
+}
+
+message Order {
+    string id = 1;
+    string user_id = 2;
+    string purchase_date = 3;
+    int32 quantity=4;
+    double price=5;
 }
 
 message AddToBasketRequest {
     string product_id = 1;
     string user_id = 2;
+    string purchase_date = 3;
+    int32 quantity=4;
+    double price=5;
+}
+
+message  AddToBasketResponse {
+    bool status = 1;
+    string  message = 2;
 }
 
 message BasketResponse {
-    repeated BasketProduct products=1;
-}
-
-message BasketProduct {
-    string id=1;
-    string name=2;
-    string description=3;
-    string images=4;
-    float price=5;
-    Discount discount=6;
-    int32 stock=7;
+    string userId = 1;
+    repeated Order products = 2;
 }
 
 message GetBasketRequest {
@@ -149,4 +157,23 @@ message DeleteBasketRequest {
 message DeleteBasketResponse {
     bool success=1;
     string message = 2;
+}
+
+message GetRecommendationsResponse {
+    repeated Product products = 1;
+}
+
+message Void {}
+
+message GetPurchasedPRequest {
+    string user_id = 1;
+    int64 limit = 2;
+    int64 page  = 3;
+}
+
+message GetPurchasedPResponse {
+    repeated Order orders = 1;
+    int64 total = 2;
+    int64 limit = 3;
+    int64 page = 4;
 }
